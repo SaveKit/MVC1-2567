@@ -32,12 +32,14 @@ class CowModel:
         cow = self.get_cow(cow_id)
         if cow:
             # คำนวณโอกาส BSOD
-            if cow["color"] == "brown":
+            if cow["color"] == "brown":  # วัวสีน้ำตาลไม่เกิด BSOD
                 chance = 1 * cow["age_years"]  # 1% ต่อปี
                 if random.uniform(0, 100) < chance:
                     cow["color"] = "blue"
                     cow["bsod"] = True
-            elif cow["color"] == "white" and not lemon:
+            elif (
+                cow["color"] == "white" and not lemon
+            ):  # วัวสีขาวเกิดและไม่ได้กินน้ำมะนาว BSOD ได้
                 chance = 0.5 * cow["age_months"]  # 0.5% ต่อเดือน
                 if random.uniform(0, 100) < chance:
                     cow["color"] = "blue"
