@@ -49,13 +49,13 @@ class CowView:
         cow_id = self.entry.get()
 
         # ตรวจสอบความถูกต้องของรหัสวัว
-        if not cow_id.isdigit():
+        if not cow_id.isdigit():  # ตรวจสอบว่าเป็นตัวเลขหรือไม่
             messagebox.showerror("Error", "Cow ID must be a number.")
             return
-        if len(cow_id) != 8:
+        if len(cow_id) != 8:  # ตรวจสอบว่ามี 8 หลักหรือไม่
             messagebox.showerror("Error", "Cow ID must be 8 digits.")
             return
-        if cow_id.startswith("0"):
+        if cow_id.startswith("0"):  # ตรวจสอบว่าไม่ขึ้นต้นด้วย 0
             messagebox.showerror("Error", "Cow ID must not start with 0.")
             return
 
