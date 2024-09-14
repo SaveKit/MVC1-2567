@@ -90,7 +90,7 @@ class CowView:
         cow_id = self.entry.get()
         cow = self.controller.milk_cow_with_lemon(cow_id)
         # แสดงข้อความแจ้งเตือนว่าวัวที่กินมะนาวจะไม่เกิด BSOD
-        messagebox.showinfo("Cows that eat lemon do not experience BSOD.")
+        messagebox.showinfo("Report", "Cows that eat lemon do not experience BSOD.")
         if cow:
             if cow["bsod"]:
                 messagebox.showerror("BSOD", f"Cow {cow_id} has BSOD. Please reset.")
