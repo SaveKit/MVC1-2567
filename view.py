@@ -102,7 +102,7 @@ class CowView:
     # แสดงข้อมูลสถานะวัวที่รีดนมล่าสุดที่ดูข้อมูล
     def update_result(self, cow):
         self.result_label.config(
-            text=f"Cow {cow['id']}: {cow['color'].capitalize()}, Age: {cow['age_years']} years, Milk: {cow['milk_produced']} bottles"
+            text=f"Cow: {cow['id']}, {cow['color'].capitalize()}, Age: {cow['age_years']} years, Milk: {cow['milk_produced']} bottles"
         )
 
     # สรุปข้อมูลการผลิตนมของวัวทั้งหมด
@@ -112,11 +112,13 @@ class CowView:
         total_sour = 0
         total_choco = 0
         bsod_count = 0
+        cows = []
         for cow in self.controller.model.cows.values():
             total_milk += cow["milk_produced"]
             total_plain += cow["milk_plain"]
             total_sour += cow["milk_sour"]
             total_choco += cow["milk_choco"]
+            cows.append(cow)
             if cow["bsod"]:
                 bsod_count += 1
 
@@ -125,8 +127,11 @@ class CowView:
             f"Plain Milk: {total_plain} bottles\n"
             f"Sour Milk: {total_sour} bottles\n"
             f"Chocolate Milk: {total_choco} bottles\n"
-            f"Cows with BSOD: {bsod_count}"
+            f"Cows with BSOD: {bsod_count}\n"
         )
+
+        for cow in cows:
+            report += f"\nCow: {cow['id']}, Milk: {cow['milk_produced']} bottles"
         messagebox.showinfo("Report", report)
 
     # รีเซ็ตวัวที่เกิด BSOD ทั้งหมด
