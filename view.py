@@ -44,6 +44,7 @@ class CowView:
         )
         self.reset_all_button.pack(pady=10)
 
+    # ค้นหาข้อมูลวัวจากรหัสวัวที่ป้อน
     def find_cow(self):
         cow_id = self.entry.get()
 
@@ -72,6 +73,7 @@ class CowView:
             messagebox.showerror("Error", "Cow not found.")
             self.result_label.config(text="")
 
+    # รีดนมวัวที่ไม่กินมะนาว
     def milk_cow(self):
         cow_id = self.entry.get()
         cow = self.controller.milk_cow(cow_id)
@@ -83,9 +85,12 @@ class CowView:
             self.update_result(cow)
         self.show_report()
 
+    # รีดนมวัวที่กินมะนาว
     def milk_cow_with_lemon(self):
         cow_id = self.entry.get()
         cow = self.controller.milk_cow_with_lemon(cow_id)
+        # แสดงข้อความแจ้งเตือนว่าวัวที่กินมะนาวจะไม่เกิด BSOD
+        messagebox.showinfo("Cows that eat lemon do not experience BSOD.")
         if cow:
             if cow["bsod"]:
                 messagebox.showerror("BSOD", f"Cow {cow_id} has BSOD. Please reset.")
@@ -94,6 +99,13 @@ class CowView:
             self.update_result(cow)
         self.show_report()
 
+    # แสดงข้อมูลสถานะวัวที่รีดนมล่าสุดที่ดูข้อมูล
+    def update_result(self, cow):
+        self.result_label.config(
+            text=f"Cow {cow['id']}: {cow['color'].capitalize()}, Age: {cow['age_years']} years, Milk: {cow['milk_produced']} bottles"
+        )
+
+    # สรุปข้อมูลการผลิตนมของวัวทั้งหมด
     def show_report(self):
         total_milk = 0
         total_plain = 0
@@ -117,14 +129,9 @@ class CowView:
         )
         messagebox.showinfo("Report", report)
 
+    # รีเซ็ตวัวที่เกิด BSOD ทั้งหมด
     def reset_all_bsod(self):
         for cow_id, cow in self.controller.model.cows.items():
             if cow["bsod"]:
                 self.controller.reset_cow(cow_id)
         messagebox.showinfo("Reset", "All BSOD cows have been reset.")
-
-    def update_result(self, cow):
-        # แสดงข้อมูลสถานะวัวที่รีดนมไปแล้วและวัวที่เป็น BSOD
-        self.result_label.config(
-            text=f"Cow {cow['id']}: {cow['color'].capitalize()}, Age: {cow['age_years']} years, Milk: {cow['milk_produced']} bottles"
-        )
